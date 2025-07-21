@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>Tatko Lastik IVR Akışı</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f9f9f9;
+      padding: 20px;
+    }
+    ul {
+      list-style-type: none;
+      padding-left: 20px;
+    }
+    .node {
+      margin: 6px 0;
+      cursor: pointer;
+      padding: 8px 14px;
+      border-radius: 8px;
+      width: fit-content;
+      max-width: 90%;
+      transition: background 0.2s, transform 0.2s;
+      user-select: none;
+      color: white;
+    }
+    .node:hover {
+      opacity: 0.95;
+      transform: scale(1.02);
+    }
+
+    /* Renk seviyeleri */
+    .level-1 { background-color: #0b1c4d; }   /* Ana Menü - Lacivert */
+    .level-2 { background-color: #6c757d; }   /* Alt Menü - Gri */
+    .level-3 { background-color: #adb5bd; color: #000; }  /* Alt Alt Menü - Açık Gri */
+
+    .children {
+      display: none;
+      margin-left: 20px;
+      overflow: hidden;
+      transition: all 0.3s ease-in-out;
+    }
+
+    a {
+      color: #99c0ff;
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+<h2>Tatko Lastik IVR Akışı</h2>
+
+<!-- Ses dosyaları -->
+<audio id="audio-karsilama" src="ykarsilama.wav"></audio>
+<audio id="audio-bayi" src="y_ivrbayi (1).wav"></audio>
+<audio id="audio-tuketici" src="tus_1_1 (1).wav"></audio>
+<audio id="audio-diger" src="tatko_diger_islemler_tuslama_yeni.wav"></audio>
+
+<ul>
+  <li>
+    <div class="node level-1" onclick="playAudio('audio-karsilama')">
+      📞 Tatko Lastik’e Hoş Geldiniz. <br>
+      Görüşmelerimiz sırasında bazı kişisel verileriniz işlenecektir. <br>
+      Aydınlatma metnimize <a href="https://tatkolastik.com" target="_blank">tatkolastik.com</a> adresinden ulaşabilirsiniz.
+    </div>
+    <ul class="children" style="display: block;">
+      <li>
+        <div class="node level-2" onclick="playAudio('audio-tuketici'); toggle(this)">👤 1 - Tüketici iseniz 1’i tuşlayınız</div>
+        <ul class="children">
+          <li><div class="node level-3">🎧 1 - Operatöre Bağlan</div></li>
+          <li><div class="node level-3">📝 3 - Şikayet ve Talepler</div></li>
+        </ul>
+      </li>
+      <li>
+        <div class="node level-2" onclick="playAudio('audio-bayi'); toggle(this)">🏪 2 - Bayi iseniz 2’yi tuşlayınız</div>
+        <ul class="children">
+          <li><div class="node level-3">🚚 2 - Sevkiyat İşlemleri</div></li>
+          <li><div class="node level-3">📦 3 - Sipariş İşlemleri</div></li>
+          <li><div class="node level-3">🔧 5 - Arızalı Lastikler</div></li>
+          <li><div class="node level-3">💳 6 - DBS ve Ödeme Sistemleri</div></li>
+          <li><div class="node level-3">📉 7 - Krediler ve Risk İşlemleri</div></li>
+          <li><div class="node level-3">🎧 8 - Operatör</div></li>
+        </ul>
+      </li>
+      <li>
+        <div class="node level-2" onclick="playAudio('audio-diger'); toggle(this)">📂 3 - Tatko ile ilgili diğer işlemler için 3’ü tuşlayınız</div>
+        <ul class="children">
+          <li><div class="node level-3">🎧 1 - Operatör</div></li>
+          <li>
+            <div class="node level-3" onclick="toggle(this)">🧾 2 - Mutabakat İşlemleri</div>
+            <ul class="children">
+              <li><div class="node level-3">🔍 1 - Ticari Lastikler ve KSM</div></li>
+              <li><div class="node level-3">🏗️ 2 - Yol Dışı Mutabakat</div></li>
+              <li><div class="node level-3">📁 3 - Diğer Mutabakatlar</div></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<script>
+  function stopAllAudio() {
+    document.querySelectorAll("audio").forEach(audio => {
+      audio.pause();
+      audio.currentTime = 0;
+    });
+  }
+
+  function playAudio(id) {
+    stopAllAudio(); // Önce tüm sesleri durdur
+    const audio = document.getElementById(id);
+    if (audio) {
+      audio.play();
+    }
+  }
+
+  function toggle(element) {
+    const children = element.nextElementSibling;
+    if (children && children.classList.contains('children')) {
+      const isVisible = children.style.display === 'block';
+      children.style.display = isVisible ? 'none' : 'block';
+    }
+  }
+</script>
+
+</body>
+</html>
